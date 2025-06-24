@@ -24,7 +24,7 @@ when "search"
     app.search(query)
   end
 when "duplicates"
-  app.find_duplicates
+  app.find_dupes
 else
   puts "Unknown command: #{command}"
 end

@@ -30,7 +30,7 @@ RSpec.describe ShiftcareSearch::ShiftcareSearchApp do
     it "prints results matching the query" do
       expect {
         subject.search("smith")
-      }.to output(/John Smith.*Johnny Smith/).to_stdout
+      }.to output("Search Results:\n- ID: 1, Full Name: John Smith, Email: john@example.com\n- ID: 3, Full Name: Johnny Smith, Email: john@example.com\n").to_stdout
     end
 
     it "prints no data found when there is no match" do

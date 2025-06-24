@@ -45,7 +45,7 @@ module ShiftcareSearch
     end
 
     def print(datum)
-      puts "- ID: #{datum['id']}, Name: #{datum['name']}, Email: #{datum['email']}"
+      puts "- ID: #{datum['id']}, Full Name: #{datum['full_name']}, Email: #{datum['email']}"
     end
   end
 end
