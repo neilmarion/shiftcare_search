@@ -1,4 +1,6 @@
 require "json"
+require_relative "domain/search"
+require_relative "domain/find_duplicates"
 
 module ShiftcareSearch
   class ShiftcareSearchApp
@@ -7,7 +9,8 @@ module ShiftcareSearch
     end
 
     def search(query)
-      results = @data.select { |datum| datum["full_name"].downcase.include?(query.downcase) }
+      search_domain = Domain::Search.new(data: @data)
+      results = search_domain.search(query)
       if results.any?
         puts "Search Results:"
         results.each { |datum| print(datum) }
@@ -17,10 +20,9 @@ module ShiftcareSearch
     end
 
     def find_dupes
-      email_map = Hash.new { |hash, key| hash[key] = [] }
-      @data.each { |datum| email_map[datum["email"]] << datum }
+      find_duplicates_domain = Domain::FindDuplicates.new(data: @data)
+      duplicates = find_duplicates_domain.find_dupes
 
-      duplicates = email_map.select { |_, list| list.size > 1 }
       if duplicates.any?
         puts "Duplicate Emails Found:"
         duplicates.each do |email, data|
