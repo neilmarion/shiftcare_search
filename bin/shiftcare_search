@@ -1,18 +1,34 @@
 #!/usr/bin/env ruby
 
+require "optparse"
 require_relative "../lib/shiftcare_search"
 
 include ShiftcareSearch
 
-if ARGV.empty?
-  puts "Usage:"
-  puts "  shiftcare_search search <query>"
-  puts "  shiftcare_search duplicates"
-  exit
+options = {}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: shiftcare_search --file=clients.json <command> [query]"
+
+  opts.on("-fFILE", "--file=FILE", "Path to JSON file (required)") do |f|
+    options[:file] = f
+  end
+end.parse!
+
+if options[:file].nil?
+  puts "Error: You must provide a JSON file using --file"
+  puts "Example: shiftcare_search --file=clients.json search John"
+  exit 1
 end
 
-app = ShiftcareSearchApp.new("clients.json")
+if ARGV.empty?
+  puts "Usage:"
+  puts "  shiftcare_search --file=clients.json search <query>"
+  puts "  shiftcare_search --file=clients.json duplicates"
+  exit 1
+end
 
+app = ShiftcareSearchApp.new(options[:file])
 command = ARGV.shift
 
 case command
@@ -27,4 +43,5 @@ when "duplicates"
   app.find_dupes
 else
   puts "Unknown command: #{command}"
+  exit 1
 end
