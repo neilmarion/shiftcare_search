@@ -1,4 +1,3 @@
-# spec/shiftcare_search/shiftcare_search_app_spec.rb
 require "spec_helper"
 require "stringio"
 require "json"
