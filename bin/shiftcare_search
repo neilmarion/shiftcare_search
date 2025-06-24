@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/shiftcare_search"
+
+include ShiftcareSearch
+
+if ARGV.empty?
+  puts "Usage:"
+  puts "  shiftcare_search search <query>"
+  puts "  shiftcare_search duplicates"
+  exit
+end
+
+app = ShiftcareSearchApp.new("clients.json")
+
+command = ARGV.shift
+
+case command
+when "search"
+  query = ARGV.join(" ")
+  if query.empty?
+    puts "Please provide a search query."
+  else
+    app.search(query)
+  end
+when "duplicates"
+  app.find_duplicates
+else
+  puts "Unknown command: #{command}"
+end

@@ -1,0 +1,1 @@
+require_relative "shiftcare_search/shiftcare_search_app"
