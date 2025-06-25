@@ -95,6 +95,7 @@ bundle exec rspec
 2. The file is small enough to be read entirely into memory.
 3. The user already has a Ruby environment setup and installing the gem is the only main thing to accomplish
 4. The user only wants to search for full names
+5. The user will properly input. It's because some special characters will give an error in command line. For example, when you give it `shiftcare_search --file=clients.json search hello *#*$` it will then return a `bad pattern` error.
 
 ## 🧠 Design Decisions
 
